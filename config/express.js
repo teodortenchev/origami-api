@@ -1,6 +1,7 @@
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
+const { json } = require('body-parser');
 const secret = 'secret';
 
 module.exports = (app) => {
@@ -11,4 +12,5 @@ module.exports = (app) => {
     }));
 
     app.use(cookieParser(secret));
+    app.use(json());
 };

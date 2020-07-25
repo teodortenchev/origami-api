@@ -19,6 +19,7 @@ module.exports = {
 
         login: (req, res, next) => {
             const { username, password } = req.body;
+            
             models.User.findOne({ username })
                 .then((user) => Promise.all([user, user.matchPassword(password)]))
                 .then(([user, match]) => {
@@ -28,7 +29,7 @@ module.exports = {
                     }
 
                     const token = utils.jwt.createToken({ id: user._id });
-                    res.cookie(config.authCookieName, token).send(user);
+                    res.header("Authorization", token).send(user);
                 })
                 .catch(next);
         },
